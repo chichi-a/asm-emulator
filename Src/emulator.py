@@ -24,4 +24,3 @@ registers.extend([None] * (32 - len(registers)))
 for i in alu_instructions.valid_register:
     registers[i] = 0
 
-print(registers)
