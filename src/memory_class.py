@@ -6,14 +6,15 @@ class CPU:
     def __init__(self):
         """ in this list each index represents one byte of stack/heap
         """
-        self.memory_pointer = [0]*10000  
+        self.memory_blocks = [0]*10000  
         # what offset of stack are we currently on
-        self.curr_offset = 0;
+        self.curr_offset_pointer = 0;
+        self.total_size = 10000
 
         """here we save 32 registers, where some of them can be
         alletred by thi caller
         """
-        self.registers = [0,"ra",self.memory_pointer,"gp","tp"]
+        self.registers = [0,"ra",self.curr_offset_pointer,"gp","tp"]
         self.registers.extend([None] * (32 - len(self.registers)))
 
         for i in valid_registerr:

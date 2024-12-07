@@ -16,10 +16,12 @@ variable_byte_size = [1,2,4]
 this methods takes line from asm file as an input 
 and returns the specific command from that line
 """
-
 def command(line)->str:
     pass
 
+"""
+  --------------- file itteration implementation below : -------------------------------------
+"""
 
 curr_cpu = memory_class.CPU()
 
@@ -29,8 +31,9 @@ curr_cpu = memory_class.CPU()
 path = 'data/asm_files/min.s'
 with (open(path,'r')) as file:
      for line in file:
+          pass
         # Print each line
-        print(line.strip())
+       # print(line.strip())
 
 
 
