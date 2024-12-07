@@ -1,0 +1,19 @@
+"""
+0 - v : 4
+4 - v : 1
+5 - v : 3
+8 - v : 4
+
+stack_size = 12
+bytes to add = 5
+
+start_key = 11 - 5 = 7 #minimum romeli fofsetidan viwyebt
+end_key = curr_offset #bolo offsett
+
+gadavuyvebi keyebs
+tu starts da ends shorisaa vshli mag keys memoridan , mag offsets 
+
+washlebis mere maqsimum offsets vimaxsovreb
+
+
+"""
