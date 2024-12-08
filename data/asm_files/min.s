@@ -1,8 +1,9 @@
 addi  x10 x10, 30
-addi x11 x11, -15
+adDI x11 x11, -15
 addi sp, sp, -8
 sw x10, 0(sp)
-sw x11, 4(sp)
+sw x11, 4(sp)  # fagagaga
+#blaablaaa
 call min
 addi sp, sp, 8
 addi   x10, x0, 1

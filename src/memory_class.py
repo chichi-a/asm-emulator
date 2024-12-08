@@ -19,3 +19,8 @@ class CPU:
 
         for i in valid_registerr:
             self.registers[i] = 0
+
+        """
+        list where we save assembly line commands
+        """
+        self.commands = []

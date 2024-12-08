@@ -1,9 +1,9 @@
-import alu_instructions
-import flow
-import memory
-import memory_class
-import branch
-import ecalls
+from alu_instructions import *
+from flow import *
+from memory import *
+from memory_class import *
+from branch import *
+from ecalls import *
 import sys
 
 branches = ["blt", "ble", "beq", "bne", "bgt", "bge"]
@@ -12,29 +12,42 @@ storage = ["sw","lw"]
 flow = ["jump","jalr","call"]
 variable_byte_size = [1,2,4]
 
-""" method command
 
-this methods takes line from asm file as an input 
-and returns the specific command from that line
-"""
-def command(line)->str:
-    pass
 
 """
   --------------- file itteration implementation below : -------------------------------------
 """
 
-curr_cpu = memory_class.CPU()
+curr_cpu = CPU()
 
 
 """ assembly file itteration
 """
 path = 'data/asm_files/min.s'
+
 with (open(path,'r')) as file:
      for line in file:
-          pass
-        # Print each line
-       # print(line.strip())
+      
+      line = line.strip()
+      
+      if line.startswith("#"):
+        continue
+      
+      if "#" in line:
+        line = line.split("#", 1)[0]
+      
+      line = line.replace(",", "")
+      line = line.lower()
+      line = line.strip()
+      if line:
+        curr_cpu.commands.append(line)
+
+process_commands(curr_cpu)
+print(curr_cpu.commands)
+
+
+
+
 
 
 
