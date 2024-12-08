@@ -17,22 +17,23 @@ def add_to_sp(curr_cpu,bytes):
 
     #remove space on stack and go up the stack
     if bytes > 0:
-        if curr_offset < bytes:
+        if curr_offset + bytes >= curr_cpu.total_size:
             raise ValueError("not enough space")
                  
-        start_pos = curr_offset - bytes
-        end_pos = curr_offset
+        start_pos = curr_offset
+        end_pos = curr_offset + bytes
         for i in range (start_pos,end_pos+1):
             curr_cpu.memory_blocks[i] = 0
 
         
-        curr_cpu.curr_offset_pointer -= bytes
-
+        curr_cpu.curr_offset_pointer += bytes
+                
         return 
 
     # make space on stack to add new variables
     if bytes < 0:
-
+        if curr_offset - bytes <= 0:
+            raise ValueError("not enough space")
         curr_cpu.curr_offset_pointer -= bytes
        
         return 
@@ -42,7 +43,7 @@ def store_word(val_register,src_register,add_mem,curr_cpu):
     address = curr_cpu.registers[src_register]
     address += add_mem
 
-    if address + 3 >= curr_cpu.total_size | address < 0 :
+    if address + 3 >= curr_cpu.total_size | address < 0:
         raise ValueError("not enough space")
 
     value = curr_cpu.registers[val_register]
@@ -55,9 +56,9 @@ def store_word(val_register,src_register,add_mem,curr_cpu):
     
 def store_half(val_register,src_register,add_mem,curr_cpu):
     address = curr_cpu.registers[src_register]
-    address -= add_mem
+    address += add_mem
 
-    if address + 1 >= curr_cpu.total_size | address < 0 :
+    if address + 1 >= curr_cpu.total_size | address < 0:
         raise ValueError("not enough space")
 
     value = curr_cpu.registers[val_register]
@@ -68,9 +69,9 @@ def store_half(val_register,src_register,add_mem,curr_cpu):
 
 def store_byte(val_register,src_register,add_mem,curr_cpu):
     address = curr_cpu.registers[src_register]
-    address -= add_mem
+    address += add_mem
 
-    if address  >= curr_cpu.total_size | address < 0:
+    if address  < 0 | address >= curr_cpu.total_size:
         raise ValueError("not enough space")
 
     value = curr_cpu.registers[val_register]
@@ -80,11 +81,11 @@ def store_byte(val_register,src_register,add_mem,curr_cpu):
 
 def load_word(val_register,dest_register,add_mem,curr_cpu):
     address = curr_cpu.registers[val_register]
-    address -= add_mem
+    address += add_mem
 
-    if address + 3 >= curr_cpu.total_size | address < 0:
+    if address + 3 >= curr_cpu.total_size| address < 0:
         raise ValueError("not enough space")
-
+    
     values = []
     for i in range(0,4):
         values.append(curr_cpu.memory_blocks[address+i])
@@ -97,7 +98,7 @@ def load_word(val_register,dest_register,add_mem,curr_cpu):
 
 def load_half(val_register,dest_register,add_mem,curr_cpu):
     address = curr_cpu.registers[val_register]
-    address -= add_mem
+    address += add_mem
 
     if address + 1 >= curr_cpu.total_size | address < 0:
         raise ValueError("not enough space")
@@ -111,9 +112,9 @@ def load_half(val_register,dest_register,add_mem,curr_cpu):
 
 def load_byte(val_register,dest_register,add_mem,curr_cpu):
     address = curr_cpu.registers[val_register]
-    address -= add_mem
+    address += add_mem
 
-    if address  >= curr_cpu.total_size | address < 0:
+    if address  < 0 | address >= curr_cpu.total_size:
         raise ValueError("not enough space")
     
     value = curr_cpu.memory_blocks[address]

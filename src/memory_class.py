@@ -6,10 +6,10 @@ class CPU:
     def __init__(self):
         """ in this list each index represents one byte of stack/heap
         """
-        self.memory_blocks = [0]*10000  
+        self.memory_blocks = [0]*10001  
         # what offset of stack are we currently on
-        self.curr_offset_pointer = 0;
-        self.total_size = 10000
+        self.curr_offset_pointer = 10000;
+        self.total_size = 10001
 
         """here we save 32 registers, where some of them can be
         alletred by thi caller
