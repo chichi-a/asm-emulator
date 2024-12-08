@@ -1,18 +1,14 @@
+#if n is 0 this returns the rightmost byte
+def nth_byte(value, n,len):
+    if n>= len :
+        raise ValueError("not enough length")
+    mask = 0xFF << (8 * n)
+    return ((value & mask) >> (8 * n))
 
-def first_n_bytes(value,n):
-    shift = (4 - n) * 8
-    shifted_value = value>>shift
-    mask = (1 << ((4-n) * 8)) - 1
-    extracted_bytes = shifted_value&mask
-    return extracted_bytes
 
-def last_n_bytes(value,n):
-    mask = (1<< (n*8)) -1
-    extracted_bytes = value&mask
-    return extracted_bytes
-
-def nth_byte(value,n):
-    pass
+def conc_two_values(a,b):
+    return (a<<8) | b
+    
 
 #addi sp sp +-bytes
 def add_to_sp(curr_cpu,bytes):
@@ -51,12 +47,38 @@ def store_word(val_register,src_register,add_mem,curr_cpu):
 
     value = curr_cpu.registers[val_register]
 
-    curr_cpu.memory_blocks[address]  = nth_byte(value,0)
-    curr_cpu.memory_blocks[address]  = nth_byte(value,1)
-    curr_cpu.memory_blocks[address]  = nth_byte(value,2)
-    curr_cpu.memory_blocks[address]  = nth_byte(value,3)
+    #if i have value : 12345678
+    #ill have to store : 78 56 34 12 
+
+    curr_cpu.memory_blocks[address] = nth_byte(value,0,4)
+    curr_cpu.memory_blocks[address+1] = nth_byte(value,1,4)
+    curr_cpu.memory_blocks[address+2] = nth_byte(value,2,4)
+    curr_cpu.memory_blocks[address+3]  = nth_byte(value,3,4)
     
-    
+def store_half(val_register,src_register,add_mem,curr_cpu):
+    address = curr_cpu.registers[src_register]
+    address += add_mem
+
+    if address + 1 > curr_cpu.total_size:
+        raise ValueError("not enough space")
+
+    value = curr_cpu.registers[val_register]
+
+    curr_cpu.memory_blocks[address] = nth_byte(value,0,2)
+    curr_cpu.memory_blocks[address+1] = nth_byte(value,1,2)
+
+
+def store_byte(val_register,src_register,add_mem,curr_cpu):
+    address = curr_cpu.registers[src_register]
+    address += add_mem
+
+    if address  > curr_cpu.total_size:
+        raise ValueError("not enough space")
+
+    value = curr_cpu.registers[val_register]
+
+    curr_cpu.memory_blocks[address]  = nth_byte(value,0,1)
+
 
 
 

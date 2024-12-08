@@ -4,6 +4,7 @@ import memory
 import memory_class
 import branch
 import ecalls
+import sys
 
 branches = ["blt", "ble", "beq", "bne", "bgt", "bge"]
 alu = ["add","addi","mul","muli","div"]
