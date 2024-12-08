@@ -11,6 +11,13 @@ def process_commands(curr_cpu):
         
         curr_cpu.commands[index] = parts
         index += 1;
-      
-        
+
+
+def labels(curr_cpu):
+    for i, line in enumerate(curr_cpu.commands):
+
+        if line[0].endswith(":"):
+            curr_cpu.label_ind.append((line[0][:-1],i))
+        elif ":" in line:
+            curr_cpu.label_ind.append((line[0],i))            
         

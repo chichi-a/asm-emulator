@@ -12,7 +12,7 @@ ecall
 li x10, 10
 ecall
 
-min:
+min :
 lw x10, 0(sp)
 lw x11, 4(sp)
 bge x10, x11, else

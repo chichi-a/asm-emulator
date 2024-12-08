@@ -24,3 +24,5 @@ class CPU:
         list where we save assembly line commands
         """
         self.commands = []
+
+        self.label_ind = []
