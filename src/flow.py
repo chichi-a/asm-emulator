@@ -1,3 +1,6 @@
+from memory import *
+
+
 """ method process commands
 parsing through the list of assembly lines we remove 
 space characters and make a list containing list of commands
@@ -23,13 +26,18 @@ def labels(curr_cpu):
             curr_cpu.label_ind.append((line[0][:-1],i))
         elif ":" in line:
             curr_cpu.label_ind.append((line[0],i))            
-        
+
+""" get register index from string reg
+return index of a register we are currently working on
+"""
 def get_register(reg):
 
+    # dereference case :
     if  reg.count('(') == 1 and reg.count(')') == 1:
         inner_reg = reg.split("(")[1].strip(")")
         return get_register(inner_reg) 
 
+    # normal register case :
     if reg.startswith("x"):
         reg_num = int(reg[1:]) 
         if not isinstance(reg_num,int):
@@ -38,11 +46,33 @@ def get_register(reg):
             return reg_num
         else:
             raise ValueError(f"Invalid register number: {reg}")
-
+    
+    # normal stack poitner case : 
     if reg == "sp":
         return 2
     
     raise ValueError(f"Unrecognized register format: {reg}")
+
+
+""" get register index and an offset number 
+return index and an offset number of a register we are currently working on
+"""
+def get_storage(reg):
+    if "(" in reg and ")" in reg:
+      
+        offset_part = reg.split("(")[0]
+        inner_reg = reg.split("(")[1].strip(")")
+
+        if offset_part.strip() == "":  
+            return 0, get_register(inner_reg)
+        try:
+            offset = int(offset_part)
+            return offset,get_register(inner_reg)
+        
+        except ValueError:
+            raise ValueError(f"Invalid offset format: {offset_part}")
+    else:
+        raise ValueError(f"Register format does not contain offset: {reg}")
 
 
 def storage_control(curr_cpu,index):
@@ -53,20 +83,24 @@ def storage_control(curr_cpu,index):
     
     reg_1 = curr_cpu.commands[index][1]
     reg_2 = curr_cpu.commands[index][2]
+
+    reg_1_ind = get_register(reg_1)
+    offset,reg_2_ind = get_storage(reg_2)
     
     if curr_command == "sw":
-        pass
+        store_word(reg_1_ind,reg_2_ind,offset,curr_cpu)
 
     if curr_command == "sh":
-        pass
+        store_half(reg_1_ind,reg_2_ind,offset,curr_cpu)
 
     if curr_command == "sb":
-        pass
+        store_byte(reg_1_ind,reg_2_ind,offset,curr_cpu)
+
     if curr_command == "lw":
-        pass
+        load_word(reg_2_ind,reg_1_ind,offset,curr_cpu)
 
     if curr_command == "lh":
-        pass
+        load_half(reg_2_ind,reg_1_ind,offset,curr_cpu)
 
     if curr_command == "lb":
-        pass
+        load_byte(reg_2_ind,reg_1_ind,offset,curr_cpu)

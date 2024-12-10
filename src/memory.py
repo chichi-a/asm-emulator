@@ -49,6 +49,8 @@ def store_word(val_register,src_register,add_mem,curr_cpu):
     address += add_mem
 
     if address + 3 >= curr_cpu.total_size | address < 0:
+        print("this iss valueee ")
+
         raise ValueError("not enough space")
 
     value = curr_cpu.registers[val_register]

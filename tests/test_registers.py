@@ -16,3 +16,15 @@ def test_get_reg():
     assert c == 2
     assert d == 2
     assert e == 4
+
+
+def test_storage():
+
+    a,b = get_storage("(x2)")
+    assert a == 0
+    assert b == 2
+
+    c,d = get_storage("10(sp)")
+    assert c == 10
+    assert d == 2
+
