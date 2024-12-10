@@ -9,7 +9,7 @@ import sys
 branches = ["blt", "ble", "beq", "bne", "bgt", "bge"]
 alu = ["add","addi","mul","muli","div"]
 storage = ["sw","lw","sh","sb","lb","lh"]
-flow = ["jump","jalr","call"]
+flow = ["jump","jalr","call","ret"]
 variable_byte_size = [1,2,4]
 
 
@@ -19,7 +19,6 @@ variable_byte_size = [1,2,4]
 """
 
 curr_cpu = CPU()
-
 
 """ assembly file itteration
 """
@@ -44,24 +43,21 @@ with (open(path,'r')) as file:
 
 process_commands(curr_cpu)
 labels(curr_cpu)
-print(curr_cpu.label_ind)
 
 for i in range (len(curr_cpu.commands)):
-  lst = curr_cpu.commands[i]
-  for parts in lst:
+  lst = curr_cpu.commands[i]    
+  if lst[0] in branches:
+    pass
+
+  elif lst[0] in alu:
+    pass
+
+  elif lst[0] in storage:
+    storage_control(curr_cpu,i)
     
-    if parts[0] in branches:
-      pass
-    
-    elif parts[0] in alu:
-      pass
+  elif lst[0] in flow:
+    pass
 
-    elif parts[0] in storage:
-      pass
-
-    elif parts[0] in flow:
-      pass
-
-    elif parts[0] == "ecall":
-      pass
+  elif lst[0] == "ecall":
+    pass
     

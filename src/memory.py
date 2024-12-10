@@ -16,7 +16,7 @@ used to change stack pointer
 """
 def add_to_sp(curr_cpu,bytes):
 
-    curr_offset = curr_cpu.curr_offset_pointer
+    curr_offset = curr_cpu.registers[2]
 
     #remove space on stack and go up the stack
     if bytes > 0:
@@ -29,16 +29,16 @@ def add_to_sp(curr_cpu,bytes):
             curr_cpu.memory_blocks[i] = 0
 
         
-        curr_cpu.curr_offset_pointer += bytes
-                
+        curr_cpu.registers[2] += bytes
+        
         return 
 
     # make space on stack to add new variables
     if bytes < 0:
         if curr_offset - bytes <= 0:
             raise ValueError("not enough space")
-        curr_cpu.curr_offset_pointer += bytes
-       
+        curr_cpu.registers[2] += bytes
+        
         return 
 
 """ store 4 byte value
