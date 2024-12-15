@@ -1,3 +1,4 @@
+add x12 x13 x14
 addi  x10 x10, 30
 adDI x11 x11, -15
 addi sp, sp, -8

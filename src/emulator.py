@@ -5,6 +5,7 @@ from memory_class import *
 from branch import *
 from ecalls import *
 import sys
+import struct
 
 branches = ["blt", "ble", "beq", "bne", "bgt", "bge"]
 alu = ["add","addi","mul","muli","div"]
@@ -44,20 +45,24 @@ with (open(path,'r')) as file:
 process_commands(curr_cpu)
 labels(curr_cpu)
 
+
+""" itterating throug every line in asm commands
+"""
 for i in range (len(curr_cpu.commands)):
   lst = curr_cpu.commands[i]    
   if lst[0] in branches:
     pass
 
   elif lst[0] in alu:
-    pass
+    alu_control(curr_cpu,i)
+  
 
   elif lst[0] in storage:
-    storage_control(curr_cpu,i)
+    pass
+    #storage_control(curr_cpu,i)
     
   elif lst[0] in flow:
     pass
 
   elif lst[0] == "ecall":
     pass
-    

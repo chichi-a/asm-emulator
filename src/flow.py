@@ -1,5 +1,5 @@
-from memory import *
-
+from src.memory import *
+from src.alu_instructions import *
 
 """ method process commands
 parsing through the list of assembly lines we remove 
@@ -104,3 +104,50 @@ def storage_control(curr_cpu,index):
 
     if curr_command == "lb":
         load_byte(reg_2_ind,reg_1_ind,offset,curr_cpu)
+
+
+"""
+
+"""
+def alu_control(curr_cpu,index) :
+    curr_command = curr_cpu.commands[index][0]
+    if (len(curr_cpu.commands[index]) != 4):
+        raise ValueError("invalid command!")
+    
+    reg_1 = curr_cpu.commands[index][1]
+    reg_2 = curr_cpu.commands[index][2]
+
+    reg_1_ind = get_register(reg_1)
+    reg_2_ind = get_register(reg_2)
+
+    last_num = curr_cpu.commands[index][3]
+
+    if curr_command == "add":
+        reg_3_ind = get_register(last_num)
+        add(reg_2_ind,reg_3_ind,reg_1_ind,curr_cpu)
+     
+    if curr_command == "addi":
+        try:
+            num = int(last_num) 
+            addi(reg_2_ind,reg_1_ind,num,curr_cpu)
+        except ValueError:
+            print(f"Error: '{last_num}' is not a valid number.")
+        
+    if curr_command == "mul":
+        reg_3_ind = get_register(last_num)
+        mul(reg_2_ind,reg_3_ind,reg_1_ind,curr_cpu)
+        pass
+
+    if curr_command == "muli":
+        try:
+            num = int(last_num) 
+            print(num)
+            muli(reg_1_ind,reg_2_ind,num,curr_cpu)
+        except ValueError:
+            print(f"Error: '{last_num}' is not a valid number.")
+
+    if curr_command == "div":
+        reg_3_ind = get_register(last_num)
+        mul(reg_1_ind,reg_2_ind,reg_3_ind,curr_cpu)
+        
+
