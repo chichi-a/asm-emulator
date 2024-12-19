@@ -10,7 +10,7 @@ import struct
 branches = ["blt", "ble", "beq", "bne", "bgt", "bge"]
 alu = ["add","addi","mul","muli","div"]
 storage = ["sw","lw","sh","sb","lb","lh"]
-flow = ["jump","jalr","call","ret"]
+flow = ["jump","jalr","call","j"]
 variable_byte_size = [1,2,4]
 
 
@@ -45,24 +45,34 @@ with (open(path,'r')) as file:
 process_commands(curr_cpu)
 labels(curr_cpu)
 
-
 """ itterating throug every line in asm commands
 """
-for i in range (len(curr_cpu.commands)):
-  lst = curr_cpu.commands[i]    
-  if lst[0] in branches:
-    pass
+i = 0
+while ( i < len(curr_cpu.commands)):
+    lst = curr_cpu.commands[i]  
+    i+= 1  
+    print(lst)
+    if lst[0] in branches:
+      pass
 
-  elif lst[0] in alu:
-    alu_control(curr_cpu,i)
-  
+    elif lst[0] in alu:
+      #alu_control(curr_cpu,i)
+      pass
 
-  elif lst[0] in storage:
-    pass
-    #storage_control(curr_cpu,i)
+    elif lst[0] in storage:
+      pass
+      #storage_control(curr_cpu,i)
+      
+    elif lst[0] in flow:
+      command = lst[0]
+      label = lst[1]
     
-  elif lst[0] in flow:
-    pass
+      i = flow_control(curr_cpu,i,command,label)
+      continue
 
-  elif lst[0] == "ecall":
-    pass
+    elif lst[0] == "ecall":
+      pass
+
+    elif lst[0] == "ret":
+      pass
+

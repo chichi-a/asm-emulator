@@ -1,5 +1,7 @@
-from src.memory import *
-from src.alu_instructions import *
+#from src.memory import *
+#from src.alu_instructions import *
+from memory import *
+from alu_instructions import *
 
 """ method process commands
 parsing through the list of assembly lines we remove 
@@ -20,12 +22,14 @@ given our processed command lines we store each label
 with their given index/adress in code
 """
 def labels(curr_cpu):
-    for i, line in enumerate(curr_cpu.commands):
-
+   
+   for i, line in enumerate(curr_cpu.commands):
+        
         if line[0].endswith(":"):
-            curr_cpu.label_ind.append((line[0][:-1],i))
+            curr_cpu.label_ind[line[0][:-1]] = i 
+
         elif ":" in line:
-            curr_cpu.label_ind.append((line[0],i))            
+            curr_cpu.label_ind[line[0]] = i           
 
 """ get register index from string reg
 return index of a register we are currently working on
@@ -51,6 +55,9 @@ def get_register(reg):
     if reg == "sp":
         return 2
     
+    if reg == "ra":
+        return 1
+
     raise ValueError(f"Unrecognized register format: {reg}")
 
 
@@ -106,8 +113,7 @@ def storage_control(curr_cpu,index):
         load_byte(reg_2_ind,reg_1_ind,offset,curr_cpu)
 
 
-"""
-
+""" used for alu_instructions on regisers
 """
 def alu_control(curr_cpu,index) :
     curr_command = curr_cpu.commands[index][0]
@@ -150,4 +156,32 @@ def alu_control(curr_cpu,index) :
         reg_3_ind = get_register(last_num)
         mul(reg_1_ind,reg_2_ind,reg_3_ind,curr_cpu)
         
+
+
+"""
+"""
+
+def flow_control(curr_cpu,index,command,label):
+    
+    labels = curr_cpu.label_ind
+    if label not in labels :
+        raise ValueError(" invalid label ! ")
+    
+
+    if command == "call":
+        ra_loc = index + 1
+        curr_cpu.registers[1] = ra_loc
+        new_index = labels[label] + 1
+        return new_index
+
+    if command == "j" or command == "jump" or command =="jalr":
+        
+        new_index = labels[label] + 1
+        return new_index
+    
+
+    
+    return index
+    
+    
 

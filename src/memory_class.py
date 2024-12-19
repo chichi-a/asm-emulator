@@ -28,4 +28,4 @@ class CPU:
         """
         self.commands = []
 
-        self.label_ind = []
+        self.label_ind = {}

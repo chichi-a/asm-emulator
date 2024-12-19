@@ -10,7 +10,9 @@ def test_get_reg():
     c = get_register("sp")
     d = get_register("10(sp)")
     e = get_register("(x4)")
+    r = get_register("ra")
 
+    assert r == 1
     assert a == 0
     assert b == 2
     assert c == 2
