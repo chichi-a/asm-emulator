@@ -169,9 +169,12 @@ def flow_control(curr_cpu,index,command,label):
     
 
     if command == "call":
+        
         ra_loc = index + 1
         curr_cpu.registers[1] = ra_loc
+        
         new_index = labels[label] + 1
+        print(" thiiiis is oold : " , index, " neww : ", new_index)
         return new_index
 
     if command == "j" or command == "jump" or command =="jalr":

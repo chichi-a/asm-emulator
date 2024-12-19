@@ -50,18 +50,29 @@ labels(curr_cpu)
 i = 0
 while ( i < len(curr_cpu.commands)):
     lst = curr_cpu.commands[i]  
-    i+= 1  
+
     print(lst)
     if lst[0] in branches:
-      pass
+      if (len(lst) != 4):
+        raise ValueError(" invalid branch")
+      
+      if lst[3] not in curr_cpu.label_ind:
+        raise ValueError(" invalid label ")
+
+      reg_a = get_register(lst[1])
+      reg_b = get_register(lst[2])
+      bool_check = if_statements(reg_a,reg_b,lst[0],curr_cpu)
+
+      if (bool_check):
+         i = labels[label] + 1  
+         continue
+      
 
     elif lst[0] in alu:
-      #alu_control(curr_cpu,i)
-      pass
-
+      alu_control(curr_cpu,i)
+      
     elif lst[0] in storage:
-      pass
-      #storage_control(curr_cpu,i)
+      storage_control(curr_cpu,i)
       
     elif lst[0] in flow:
       command = lst[0]
@@ -71,8 +82,12 @@ while ( i < len(curr_cpu.commands)):
       continue
 
     elif lst[0] == "ecall":
-      pass
+      if ecall_func(curr_cpu):
+        break
 
     elif lst[0] == "ret":
-      pass
+      i = curr_cpu.registers[1]
+      continue 
+    
+    i+= 1  
 
