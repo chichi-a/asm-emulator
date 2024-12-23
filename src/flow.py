@@ -1,7 +1,7 @@
-#from src.memory import *
-#from src.alu_instructions import *
-from memory import *
-from alu_instructions import *
+from src.memory import *
+from src.alu_instructions import *
+#from memory import *
+#from alu_instructions import *
 
 """ method process commands
 parsing through the list of assembly lines we remove 
@@ -47,6 +47,7 @@ def get_register(reg):
         if not isinstance(reg_num,int):
             raise ValueError(f"Invalid register number: {reg}")
         if 0 <= reg_num <= 33:
+            
             return reg_num
         else:
             raise ValueError(f"Invalid register number: {reg}")
@@ -134,8 +135,9 @@ def alu_control(curr_cpu,index) :
      
     if curr_command == "addi":
         try:
-            num = int(last_num) 
-            addi(reg_2_ind,reg_1_ind,num,curr_cpu)
+            num = int(last_num)
+            print( " thiiiiiiiis isss typee ", type(reg_1_ind))
+            addi(reg_2_ind, reg_1_ind, num, curr_cpu)
         except ValueError:
             print(f"Error: '{last_num}' is not a valid number.")
         
@@ -154,7 +156,7 @@ def alu_control(curr_cpu,index) :
 
     if curr_command == "div":
         reg_3_ind = get_register(last_num)
-        mul(reg_1_ind,reg_2_ind,reg_3_ind,curr_cpu)
+        div(reg_1_ind,reg_2_ind,reg_3_ind,curr_cpu)
         
 
 
