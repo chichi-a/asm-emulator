@@ -17,7 +17,7 @@ class CPU:
         x1 is return address
         x2 is stack pointer, pointing to current address on memory block 
         """
-        self.registers = [0,0,10000,"gp","tp"]
+        self.registers = [0,0,10000,0,0]
         self.registers.extend([None] * (33 - len(self.registers)))
 
         for i in valid_registerr:
@@ -29,3 +29,5 @@ class CPU:
         self.commands = []
 
         self.label_ind = {}
+
+        self.i = 0

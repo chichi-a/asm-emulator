@@ -1,7 +1,6 @@
 from src.memory import *
 from src.alu_instructions import *
-#from memory import *
-#from alu_instructions import *
+
 
 """ method process commands
 parsing through the list of assembly lines we remove 
@@ -136,7 +135,6 @@ def alu_control(curr_cpu,index) :
     if curr_command == "addi":
         try:
             num = int(last_num)
-            print( " thiiiiiiiis isss typee ", type(reg_1_ind))
             addi(reg_2_ind, reg_1_ind, num, curr_cpu)
         except ValueError:
             print(f"Error: '{last_num}' is not a valid number.")
@@ -149,7 +147,6 @@ def alu_control(curr_cpu,index) :
     if curr_command == "muli":
         try:
             num = int(last_num) 
-            print(num)
             muli(reg_1_ind,reg_2_ind,num,curr_cpu)
         except ValueError:
             print(f"Error: '{last_num}' is not a valid number.")
@@ -175,13 +172,12 @@ def flow_control(curr_cpu,index,command,label):
         ra_loc = index + 1
         curr_cpu.registers[1] = ra_loc
         
-        new_index = labels[label] + 1
-        print(" thiiiis is oold : " , index, " neww : ", new_index)
+        new_index = labels[label] 
         return new_index
 
     if command == "j" or command == "jump" or command =="jalr":
         
-        new_index = labels[label] + 1
+        new_index = labels[label] 
         return new_index
     
 

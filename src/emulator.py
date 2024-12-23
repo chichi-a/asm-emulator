@@ -5,14 +5,7 @@ from src.memory_class import *
 from src.branch import *
 from src.ecalls import *
 
-"""
-from alu_instructions import *
-from flow import *
-from memory import *
-from memory_class import *
-from branch import *
-from ecalls import *
-"""
+
 
 branches = ["blt", "ble", "beq", "bne", "bgt", "bge"]
 alu = ["add","addi","mul","muli","div"]
@@ -64,10 +57,9 @@ def list_read(curr_cpu, lst) :
 """ itterating throug every line in asm commands
 """
 def command_iteration(curr_cpu):
-  i = 0
-  while ( i < len(curr_cpu.commands)):
-      print("this is i : ", i)
-      lst = curr_cpu.commands[i]  
+  
+  while ( curr_cpu.i < len(curr_cpu.commands)):
+      lst = curr_cpu.commands[curr_cpu.i]  
       if lst[0] in branches:
         if (len(lst) != 4):
           raise ValueError(" invalid branch")
@@ -80,37 +72,32 @@ def command_iteration(curr_cpu):
         bool_check = if_statements(reg_a,reg_b,lst[0],curr_cpu)
 
         if (bool_check):
-          i = labels[label] + 1  
+          curr_cpu.i = curr_cpu.label_ind[lst[3]] 
           continue
         
 
       elif lst[0] in alu:
-        alu_control(curr_cpu,i)
+        alu_control(curr_cpu,curr_cpu.i)
         
       elif lst[0] in storage:
-        storage_control(curr_cpu,i)
+        storage_control(curr_cpu,curr_cpu.i)
         
       elif lst[0] in flow:
         command = lst[0]
         label = lst[1]
       
-        i = flow_control(curr_cpu,i,command,label)
+        curr_cpu.i = flow_control(curr_cpu,curr_cpu.i,command,label)
         continue
 
       elif lst[0] == "ecall":
-        print("blaaaaaaaaa")
         if ecall_func(curr_cpu):
-          break
-      
-      #temporary
-      elif lst[0] == "break":
           break
 
       elif lst[0] == "ret":
-        i = curr_cpu.registers[1]
+        curr_cpu.i = curr_cpu.registers[1]
         continue 
       
-      i+= 1  
+      curr_cpu.i += 1  
 
 def build_commands(lst,curr_cpu):
   list_read(curr_cpu,lst)
@@ -120,9 +107,8 @@ def build_commands(lst,curr_cpu):
   labels(curr_cpu)
  
 
-   
-
-curr_cpu = CPU()
-lst = file_read(curr_cpu)
-build_commands(lst,curr_cpu)
-command_iteration(curr_cpu)
+def run():
+  curr_cpu = CPU()
+  lst = file_read(curr_cpu)
+  build_commands(lst,curr_cpu)
+  command_iteration(curr_cpu)

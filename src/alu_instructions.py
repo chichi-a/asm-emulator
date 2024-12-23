@@ -83,7 +83,7 @@ def div(register_0, register_1, register_2, curr_cpu):
         reg_val2 = int(curr_cpu.registers[register_2])
         if reg_val2 == 0:
             raise ZeroDivisionError("Division by zero is not allowed.")
-        ans = reg_val1 // reg_val2  # Use integer division
+        ans = reg_val1 / reg_val2  # Use integer division
         is_within_4_bytes(ans)
         curr_cpu.registers[register_0] = ans
     else:

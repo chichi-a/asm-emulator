@@ -9,7 +9,11 @@ def nth_byte(value, n,len):
 def conc_two_values(a,b):
     return (a<<8) | b
     
-
+def sign_extend(value, bits):
+    """Sign-extends a value to the specified number of bits."""
+    if value & (1 << (bits - 1)):
+        value -= (1 << bits)
+    return value
 
 """ same as addi sp sp bytes
 used to change stack pointer
@@ -49,8 +53,6 @@ def store_word(val_register,src_register,add_mem,curr_cpu):
     address += add_mem
 
     if address + 3 >= curr_cpu.total_size | address < 0:
-        print("this iss valueee ")
-
         raise ValueError("not enough space")
 
     value = curr_cpu.registers[val_register]
@@ -107,6 +109,8 @@ def load_word(val_register,dest_register,add_mem,curr_cpu):
     ans = conc_two_values(values[3],values[2])
     ans = conc_two_values(ans,values[1])
     ans = conc_two_values(ans,values[0])
+    ans = sign_extend(ans, 32)
+
 
     curr_cpu.registers[dest_register] = ans
 
@@ -126,6 +130,7 @@ def load_half(val_register,dest_register,add_mem,curr_cpu):
         values.append(curr_cpu.memory_blocks[address+i])
 
     ans = conc_two_values(values[1],values[0])
+    ans = sign_extend(ans, 16)
     curr_cpu.registers[dest_register] = ans
 
 """ load value from src into val register
@@ -140,4 +145,5 @@ def load_byte(val_register,dest_register,add_mem,curr_cpu):
         raise ValueError("not enough space")
     
     value = curr_cpu.memory_blocks[address]
+    value = sign_extend(value, 8)
     curr_cpu.registers[dest_register] = value
