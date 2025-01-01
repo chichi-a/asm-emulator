@@ -4,6 +4,7 @@ from src.memory import *
 from src.memory_class import *
 from src.branch import *
 from src.ecalls import *
+import sys
 
 
 """
@@ -26,9 +27,7 @@ variable_byte_size = [1,2,4]
 """ assembly file itteration
 """
 
-helper_path = 'data/asm_files/sieve.s'
-
-path = input("enter asm file path : ")
+path = str(sys.argv[1])
 
 def file_read(curr_cpu):
   ans = []

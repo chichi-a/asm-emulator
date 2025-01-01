@@ -4,4 +4,4 @@ test:
 	python3 -m pytest tests
 
 run:
-	python3 __main__.py
+	python3 __main__.py data/asm/fib.s
