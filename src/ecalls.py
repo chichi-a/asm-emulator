@@ -1,5 +1,7 @@
 
-
+""" ecall functions
+used to print values or exit program
+"""
 def ecall_func(curr_cpu):
 
     x11_val = curr_cpu.registers[11]
