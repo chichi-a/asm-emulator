@@ -1,4 +1,4 @@
-addi x10 x10, -300
+li x10 -300
 addi x11 x11, -153
 addi sp, sp, -8
 sw x10, 0(sp)

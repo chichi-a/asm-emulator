@@ -88,3 +88,18 @@ def div(register_0, register_1, register_2, curr_cpu):
         curr_cpu.registers[register_0] = ans
     else:
         raise ValueError("Use a valid register for your assembly code")
+
+
+""" rem method
+in reg[register_0] we write reg[register_1] % reg[register_2]
+"""
+def rem(register_0, register_1, register_2, curr_cpu):
+    if (register_0 in valid_register):
+        reg_val1 = int(curr_cpu.registers[register_1])
+        reg_val2 = int(curr_cpu.registers[register_2])
+
+        ans = reg_val1 % reg_val2  # Use integer division
+        is_within_4_bytes(ans)
+        curr_cpu.registers[register_0] = ans
+    else:
+        raise ValueError("Use a valid register for your assembly code")

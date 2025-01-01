@@ -35,6 +35,8 @@ return index of a register we are currently working on
 """
 def get_register(reg):
 
+    if reg == "zero":
+        return 0
     # dereference case :
     if  reg.count('(') == 1 and reg.count(')') == 1:
         inner_reg = reg.split("(")[1].strip(")")
@@ -117,6 +119,19 @@ def storage_control(curr_cpu,index):
 """
 def alu_control(curr_cpu,index) :
     curr_command = curr_cpu.commands[index][0]
+
+    if curr_command == "li":
+        reg_1 = curr_cpu.commands[index][1]
+        reg_1_ind = get_register(reg_1)
+        last_num = curr_cpu.commands[index][2]
+        try:
+            num = int(last_num)
+            addi(0,reg_1_ind, num, curr_cpu)
+        except ValueError:
+            print(f"Error: '{last_num}' is not a valid number.")
+        return
+
+
     if (len(curr_cpu.commands[index]) != 4):
         raise ValueError("invalid command!")
     
@@ -155,8 +170,9 @@ def alu_control(curr_cpu,index) :
         reg_3_ind = get_register(last_num)
         div(reg_1_ind,reg_2_ind,reg_3_ind,curr_cpu)
         
-
-
+    if curr_command == "rem":
+        reg_3_ind = get_register(last_num)
+        rem(reg_1_ind,reg_2_ind,reg_3_ind,curr_cpu)
 """
 """
 

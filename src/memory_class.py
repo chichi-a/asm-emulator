@@ -18,7 +18,7 @@ class CPU:
         x2 is stack pointer, pointing to current address on memory block 
         """
         self.registers = [0,0,10000,0,0]
-        self.registers.extend([None] * (33 - len(self.registers)))
+        self.registers.extend([0] * (33 - len(self.registers)))
 
         for i in valid_registerr:
             self.registers[i] = 0
@@ -28,6 +28,11 @@ class CPU:
         """
         self.commands = []
 
+        
+        """ 
+        in label_ind i store index where each labe appeared
+        index is used as a location
+        """
         self.label_ind = {}
 
         self.i = 0

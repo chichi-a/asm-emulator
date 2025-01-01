@@ -6,9 +6,11 @@ from src.branch import *
 from src.ecalls import *
 
 
-
+"""
+lists containing command names of risc-v assembly
+"""
 branches = ["blt", "ble", "beq", "bne", "bgt", "bge"]
-alu = ["add","addi","mul","muli","div"]
+alu = ["add","addi","mul","muli","div","li","rem"]
 storage = ["sw","lw","sh","sb","lb","lh"]
 flow = ["jump","jalr","call","j"]
 variable_byte_size = [1,2,4]
@@ -23,8 +25,10 @@ variable_byte_size = [1,2,4]
 
 """ assembly file itteration
 """
-path = 'data/asm_files/min.s'
 
+helper_path = 'data/asm_files/sieve.s'
+
+path = input("enter asm file path : ")
 
 def file_read(curr_cpu):
   ans = []
@@ -35,6 +39,12 @@ def file_read(curr_cpu):
           ans.append(line)
   return ans
 
+
+
+""" method to parse through assembly file lines
+used to make assembly command lines from file more
+readable for my emulator
+"""
 def list_read(curr_cpu, lst) :
     for line in lst:
         if not isinstance(line, str):
@@ -49,12 +59,13 @@ def list_read(curr_cpu, lst) :
         
         if "#" in line:
             line = line.split("#", 1)[0]
-        line = line.replace(",", "").lower().strip()
+        line = line.replace(",", " ").lower().strip()
         if line:
             curr_cpu.commands.append(line)
 
 
 """ itterating throug every line in asm commands
+each asm command line we call apprpriate method
 """
 def command_iteration(curr_cpu):
   
@@ -107,6 +118,10 @@ def build_commands(lst,curr_cpu):
   labels(curr_cpu)
  
 
+
+"""
+build our emulator program
+"""
 def run():
   curr_cpu = CPU()
   lst = file_read(curr_cpu)
