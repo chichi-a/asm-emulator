@@ -67,7 +67,7 @@ For example:
 python3 __main__.py data/asm/fib.s
 ```
 
-Ensure that the assembly file contains valid RISC-V instructions supported by this interpreter.
+Ensure that the assembly file contains valid RISC-V instructions supported by this interpreter and that pytest is installed for running texts
 
 ---
 For additional details, refer to the source code or documentation within the project.
