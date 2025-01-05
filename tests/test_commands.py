@@ -26,7 +26,7 @@ def test_branch():
     command_iteration(curr_cpu)
 
 
-    index = curr_cpu.i
+    index = curr_cpu.pc
     assert index == 3
 
     curr_cpu1 = CPU()
@@ -35,7 +35,7 @@ def test_branch():
     command_iteration(curr_cpu1)
 
 
-    index = curr_cpu1.i
+    index = curr_cpu1.pc
     assert index == 6 #last ind is 5 but we make i bigger at the end of for
 
 

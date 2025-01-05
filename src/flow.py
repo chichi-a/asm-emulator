@@ -191,7 +191,7 @@ def flow_control(curr_cpu,index,command,label):
         new_index = labels[label] 
         return new_index
 
-    if command == "j" or command == "jump" or command =="jalr":
+    if command == "j" or command == "jump" :
         
         new_index = labels[label] 
         return new_index

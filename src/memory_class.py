@@ -35,4 +35,4 @@ class CPU:
         """
         self.label_ind = {}
 
-        self.i = 0
+        self.pc = 0

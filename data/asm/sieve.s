@@ -32,9 +32,17 @@ prime:
     sw x14, 0(sp)
     addi x12, x12, 1
 
-    lw  x11, 0(sp) 
-    #printing
-    ecall
+    lw x11 0(sp)
+    li x10, 1        # Set x10 to 1 for number printing
+    ecall            # Print the value in x11
+
+    # Print a space
+    addi x11, x0, 32 # Load ASCII value for space
+    li x10, 11       # Set x10 to 11 for space printing
+    ecall            # Print the space
+
+    li x10 1
+    lw x11 0(sp)
 
     N_add_prime:
         addi x15, zero, 0

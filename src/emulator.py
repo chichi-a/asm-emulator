@@ -13,7 +13,7 @@ lists containing command names of risc-v assembly
 branches = ["blt", "ble", "beq", "bne", "bgt", "bge"]
 alu = ["add","addi","mul","muli","div","li","rem"]
 storage = ["sw","lw","sh","sb","lb","lh"]
-flow = ["jump","jalr","call","j"]
+flow = ["jump","call","j"]
 variable_byte_size = [1,2,4]
 
 
@@ -68,8 +68,8 @@ each asm command line we call apprpriate method
 """
 def command_iteration(curr_cpu):
   
-  while ( curr_cpu.i < len(curr_cpu.commands)):
-      lst = curr_cpu.commands[curr_cpu.i]  
+  while ( curr_cpu.pc < len(curr_cpu.commands)):
+      lst = curr_cpu.commands[curr_cpu.pc]  
       if lst[0] in branches:
         if (len(lst) != 4):
           raise ValueError(" invalid branch")
@@ -82,21 +82,21 @@ def command_iteration(curr_cpu):
         bool_check = if_statements(reg_a,reg_b,lst[0],curr_cpu)
 
         if (bool_check):
-          curr_cpu.i = curr_cpu.label_ind[lst[3]] 
+          curr_cpu.pc = curr_cpu.label_ind[lst[3]] 
           continue
         
 
       elif lst[0] in alu:
-        alu_control(curr_cpu,curr_cpu.i)
+        alu_control(curr_cpu,curr_cpu.pc)
         
       elif lst[0] in storage:
-        storage_control(curr_cpu,curr_cpu.i)
+        storage_control(curr_cpu,curr_cpu.pc)
         
       elif lst[0] in flow:
         command = lst[0]
         label = lst[1]
       
-        curr_cpu.i = flow_control(curr_cpu,curr_cpu.i,command,label)
+        curr_cpu.pc = flow_control(curr_cpu,curr_cpu.pc,command,label)
         continue
 
       elif lst[0] == "ecall":
@@ -104,10 +104,10 @@ def command_iteration(curr_cpu):
           break
 
       elif lst[0] == "ret":
-        curr_cpu.i = curr_cpu.registers[1]
+        curr_cpu.pc = curr_cpu.registers[1]
         continue 
       
-      curr_cpu.i += 1  
+      curr_cpu.pc += 1  
 
 def build_commands(lst,curr_cpu):
   list_read(curr_cpu,lst)
